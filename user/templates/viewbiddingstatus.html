@@ -1,0 +1,26 @@
+{% extends 'userhome.html' %}
+{% load static %}
+
+{% block main %}
+<center>
+{% if status %}
+<h1>Status : Bid completed</h1>
+<a href="/user/viewbid/?pid={{pDetails.pid}}">view bid history</a>
+{% else %}
+<h1>Status : Bid running</h1>
+<br/>
+
+<h2>Bid your product here!!!</h2>
+<h3>ProductID : {{pDetails.pid}}</h3>
+<h3>Product Base Price : {{pDetails.bprice}}</h3>
+<h3>Product Current Bidding Price : {{bidprice}}</h3>
+<form method="post" action="/user/bid/">
+{% csrf_token %}    
+<h3>Enter Your Bid Price : <input type="text" name="bidprice" />
+    <input type="hidden" name="pid" value="{{pDetails.pid}}" />
+</h3>
+<button type="submit">Bid Product</button>
+</form>
+{% endif %}
+</center>
+{% endblock main %}

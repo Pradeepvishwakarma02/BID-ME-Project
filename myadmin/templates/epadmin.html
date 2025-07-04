@@ -1,0 +1,184 @@
+{% extends 'adminhome.html' %}
+
+{% block main %}
+
+<!--
+<center>
+<h1>Edit Profile Here!!!!</h1>
+<br/>
+<font style="font-size: 30px;" color="red">{{output}}</font>
+<form method="post" action="/myadmon/epadmin/">
+    {% csrf_token %}
+    <label for="">Name</label>
+    <input type="text" name="name" value="{{userDetails.name}}"/>
+    <br/>
+    
+    <label for="">Email</label>
+    <input type="text" name="email" value="{{userDetails.email}}"/>
+    <br/>
+    
+    <label for="">Mobile</label>
+    <input type="text" name="mobile" value="{{userDetails.mobile}}"/>
+    <br/>
+    
+    <label for="">Address</label>
+    <textarea name="address" >{{userDetails.address}}
+    </textarea>
+    <br/>
+    
+    <label>City</label>
+    <select name="city">
+        <option>{{userDetails.city}}</option>
+        <option>Indore</option>
+        <option>Bhopal</option>
+        <option>Ujjain</option>
+    </select>
+    <br/>
+    <label>Gender</label>
+    <input type="radio" name="gender" value="male" {{m}} />Male
+    <input type="radio" name="gender" value="female" {{f}} />Female
+    <br/>
+    <input type="submit"value="Edit Profile"/>
+</form>
+
+</center>
+-->
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: block;
+            background-color: #ccc; /* Placeholder color */
+            background-image: url('path_to_default_profile_photo.png'); /* Default profile photo */
+            background-size: cover;
+            background-position: center;
+        }
+        .edit-profile-photo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .edit-profile-photo input[type="file"] {
+            display: none;
+        }
+        .edit-profile-photo label {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .edit-profile-photo label:hover {
+            background-color: #0056b3;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: transparent url('arrow-down.png') no-repeat right center;
+            background-size: 20px;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <div id="profile-photo"></div>
+        <div class="edit-profile-photo">
+            <input type="file" id="photo-input">
+            <label for="photo-input">Edit Profile Photo</label>
+        </div>
+        <font style="font-size: 20px; color: red;">{{ output }}</font>
+        <form method="post" action="/myadmin/epadmin/">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="{{ userDetails.name }}" required>
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{ userDetails.email }}" required>
+            
+            <label for="mobile">Mobile</label>
+            <input type="text" id="mobile" name="mobile" value="{{ userDetails.mobile }}" required>
+            
+            <label for="address">Address</label>
+            <textarea id="address" name="address" required>{{ userDetails.address }}</textarea>
+            
+            <label for="city">City</label>
+            <select id="city" name="city" required>
+                <option value="{{ userDetails.city }}" selected>{{ userDetails.city }}</option>
+                <option value="Indore">Indore</option>
+                <option value="Bhopal">Bhopal</option>
+                <option value="Ujjain">Ujjain</option>
+            </select>
+            
+            <label>Gender</label>
+            <input type="radio" id="male" name="gender" value="male" {{ m }} required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female" {{ f }} required>
+            <label for="female">Female</label>
+            
+            <input type="submit" value="Edit Profile">
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+{% endblock main %}

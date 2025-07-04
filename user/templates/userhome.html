@@ -1,0 +1,38 @@
+{% extends 'master_template.html' %}
+
+{% block nav %}
+<ul>
+	<li class="first"><a href="/user">User Home</a></li>
+    <li class="first"><a href="/user/addproduct">Add Product</a></li>
+    <li>
+        <span class="opener">Search Product<b></b></span>
+        <ul>
+            <li><a href="/user/viewcategory">View Category</a></li>
+        </ul>
+    </li>
+    <li class="first"><a href="/user/funds">funds</a></li>
+	<li>
+        <span class="opener">Settings<b></b></span>
+        <ul>
+            <li><a href="/user/cpuser">Change Password</a></li>
+            <li><a href="/user/epuser">Edit Profile</a></li>
+        </ul>
+    </li>
+	<li class="last"><a href="/login/">Logout</a></li>
+</ul>
+{% endblock nav %}
+
+{% block slider %}
+<b>Welcome User : {{sunm}}</b>
+{% endblock slider %}
+
+{% block main %}
+<center>
+<h1>Welcome to BidMe</h1>
+<br/> 
+<h2>User Panel</h2>
+</center>
+{% endblock main %}
+
+{% block pagebottom %}
+{% endblock pagebottom %}

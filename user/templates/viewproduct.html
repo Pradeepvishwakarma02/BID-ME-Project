@@ -1,0 +1,34 @@
+{% extends 'userhome.html' %}
+
+{% block main %}
+<h1>Product list >> </h1>
+<br/>
+
+
+{% for row in plist %}
+<table height="150" width="600" border="2" >
+    <tr>
+        <td rowspan="3" width="35%">
+            <center>
+            <img src={{MEDIA_URL}}{{row.piconname}} height="120" width="150"/>
+            </center>
+        </td>
+        <td><b>Title</b> : {{row.pname}}</td>
+    </tr>
+    <tr>
+        <td><b>Description</b> : {{row.pdescription}}</td>
+    </tr>
+    <tr>
+        <td><b>Base Price</b> : {{row.bprice}}
+        <br/>
+        <a href="/user/viewbiddingstatus/?pid={{row.pid}}" style="color:orange;" >View Product Bidding Status</a>
+        </td>
+    </tr>
+</table>
+<br/><br/>
+
+{% endfor %}
+
+
+
+{% endblock main %}

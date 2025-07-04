@@ -1,0 +1,237 @@
+{% extends 'adminhome.html' %}
+
+{% block main %}
+
+<!--
+    
+<h1>Change Password Here!!!!</h1>
+<br/>
+
+<font style="font-size: 30px;" color="red">{{output}}</font>
+<form method="post" action="/myadmin/cpadmin/">
+    {% csrf_token %}
+
+    <label for="">Old password</label><br/>
+    <input type="password" name="opassword" placeholder="Enter Old Password"/>
+    <br/>
+    
+    <label for="">New Password</label><br/>
+    <input type="password" name="npassword" placeholder="Enter New Password"/>
+    <br/>
+
+    <label for="">Confirm New Password</label><br/>
+    <input type="password" name="cnpassword" placeholder="Enter Confirm New Password"/>
+    <br/>
+    <br/>
+    
+    <input type="submit"value="Change Password"/>
+</form>
+-->
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 50%;
+            padding: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="password"] {
+            width: 30%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Change Password</h1>
+        <font style="font-size: 20px; color: red;">{{ output }}</font>
+        <form id="changePasswordForm" method="post" action="/myadmin/cpadmin/">
+            {% csrf_token %}
+            <label for="opassword">Old Password</label>
+            <input type="password" id="opassword" name="opassword" placeholder="Enter Old Password" required>
+            <div id="opasswordError" class="error"></div>
+            
+            <label for="npassword">New Password</label>
+            <input type="password" id="npassword" name="npassword" placeholder="Enter New Password" required>
+            <div id="npasswordError" class="error"></div>
+            
+            <label for="cnpassword">Confirm New Password</label>
+            <input type="password" id="cnpassword" name="cnpassword" placeholder="Confirm New Password" required>
+            <div id="cnpasswordError" class="error"></div>
+            <br>
+            
+            <input type="submit" value="Change Password">
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('changePasswordForm');
+
+        form.addEventListener('submit', function(event) {
+            const opassword = document.getElementById('opassword').value;
+            const npassword = document.getElementById('npassword').value;
+            const cnpassword = document.getElementById('cnpassword').value;
+
+            // Reset previous error messages
+            document.querySelectorAll('.error').forEach(error => error.textContent = '');
+
+            // Perform validation
+            let hasErrors = false;
+            if (npassword !== cnpassword) {
+                document.getElementById('cnpasswordError').textContent = 'Passwords do not match';
+                hasErrors = true;
+            }
+
+            if (hasErrors) {
+                event.preventDefault(); // Prevent form submission if there are errors
+            }
+        });
+    </script>
+</body>
+</html>
+ -->
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Change Password</title>
+     <style>
+         body {
+             font-family: Arial, sans-serif;
+             background-color: #f4f4f4;
+             height: 100vh;
+             margin: 0;
+             padding: 0;
+         }
+         .container {
+             text-align:start;
+             padding: 20px;
+             border-radius: 5px;
+             background-color: #fff;
+             margin: 50px auto; /* Centering horizontally */
+         }
+         h1 {
+             margin-bottom: 20px;
+         }
+         label {
+             display: block;
+             margin-bottom: 5px;
+         }
+         input[type="password"] {
+             width: 30%;
+             padding: 8px;
+             margin-bottom: 15px;
+             border: 1px solid #ccc;
+             border-radius: 5px;
+             box-sizing: border-box;
+         }
+         input[type="submit"] {
+             background-color: #007bff;
+             color: #fff;
+             padding: 10px 20px;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+             font-size: 16px;
+         }
+         input[type="submit"]:hover {
+             background-color: #0056b3;
+         }
+         .error {
+             color: red;
+             margin-top: 5px;
+         }
+     </style>
+ </head>
+ <body>
+     <div class="container">
+         <h1>Change Password</h1>
+         <font style="font-size: 20px; color: red;">{{ output }}</font>
+         <form id="changePasswordForm" method="post" action="/myadmin/cpadmin/">
+             {% csrf_token %}
+             <label for="opassword">Old Password</label>
+             <input type="password" id="opassword" name="opassword" placeholder="Enter Old Password" required>
+             <div id="opasswordError" class="error"></div>
+             
+             <label for="npassword">New Password</label>
+             <input type="password" id="npassword" name="npassword" placeholder="Enter New Password" required>
+             <div id="npasswordError" class="error"></div>
+             
+             <label for="cnpassword">Confirm New Password</label>
+             <input type="password" id="cnpassword" name="cnpassword" placeholder="Confirm New Password" required>
+             <div id="cnpasswordError" class="error"></div>
+             <br>
+             
+             <input type="submit" value="Change Password">
+         </form>
+     </div>
+ 
+     <script>
+         const form = document.getElementById('changePasswordForm');
+ 
+         form.addEventListener('submit', function(event) {
+             const opassword = document.getElementById('opassword').value;
+             const npassword = document.getElementById('npassword').value;
+             const cnpassword = document.getElementById('cnpassword').value;
+ 
+             // Reset previous error messages
+             document.querySelectorAll('.error').forEach(error => error.textContent = '');
+ 
+             // Perform validation
+             let hasErrors = false;
+             if (npassword !== cnpassword) {
+                 document.getElementById('cnpasswordError').textContent = 'Passwords do not match';
+                 hasErrors = true;
+             }
+ 
+             if (hasErrors) {
+                 event.preventDefault(); // Prevent form submission if there are errors
+             }
+         });
+     </script>
+ </body>
+ </html>
+ 
+
+{% endblock main %}

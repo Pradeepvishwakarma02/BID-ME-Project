@@ -1,0 +1,38 @@
+{% extends 'userhome.html' %}
+
+{% block main %}
+<h1>Sub Category list >> </h1>
+<br/>
+
+<style>
+
+#subcatmain
+{
+ height:auto;
+ width:600px;
+}    
+
+.subcatpart
+{
+ height:150px;
+ width:200px;
+ float:left;
+} 
+
+</style>
+
+<div id="subcatmain">
+{% for row in sclist %}    
+    <a href="/user/viewproduct/?subcatname={{row.subcatname}}" >
+    <div class="subcatpart">
+    <center>
+    <img src={{MEDIA_URL}}{{row.subcaticonname}} height="100" width="150"/>    
+    <br/>
+    <b>{{row.subcatname}}</b>    
+    </center>
+    </div>
+    </a>    
+{% endfor %}
+</div>
+
+{% endblock main %}

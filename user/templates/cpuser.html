@@ -1,0 +1,28 @@
+{% extends 'userhome.html' %}
+
+{% block main %}
+<h1>Change Password Here</h1>
+<br/>
+<font style="font-size:20px;" color="blue">{{output}}</font>
+<form method="post" action="/user/cpuser/" >
+{% csrf_token %}
+
+<label>Old Password</label>
+<br/>    
+<input type="password" name="opassword" placeholder="Enter old password" />
+<br/><br/>
+
+<label>New Password</label>    
+<br/>
+<input type="password" name="npassword" placeholder="Enter new password" />
+<br/><br/>
+
+<label>Confirm New Password</label>    
+<br/>
+<input type="password" name="cnpassword" placeholder="Enter confirm new password" />
+<br/><br/>
+
+<input type="submit" value="Change Password" />
+
+</form>
+{% endblock main %}

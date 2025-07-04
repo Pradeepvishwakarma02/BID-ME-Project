@@ -1,0 +1,215 @@
+{% load static %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+<title>Bid Me</title>
+<link href="{% static 'images/logo.png' %}" rel="icon"/>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'jquery.dropotron-1.0.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.slidertron-1.1.js' %}"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#menu > ul').dropotron({
+			mode: 'fade',
+			globalOffsetY: 11,
+			offsetY: -15
+		});
+		$('#slider').slidertron({
+			viewerSelector: '.viewer',
+			indicatorSelector: '.indicator span',
+			reelSelector: '.reel',
+			slidesSelector: '.slide',
+			speed: 'slow',
+			advanceDelay: 4000
+		});
+	});
+</script>
+</head>
+<body>
+
+<!-- wrapper starts -->
+<div id="wrapper">
+
+	<!-- header starts -->
+	<div id="header">
+        {% block header %}
+		<div id="logo">
+			<h1><a href="#">Bid Me</a></h1>
+		</div>
+		<div id="slogan">
+			<h2>By & Sell Anythimg</h2>
+		</div>
+        {% endblock header %}
+	</div>
+	<!-- header ends-->
+
+	<!-- menu starts -->
+	<div id="menu">
+        {% block nav %}
+		<ul>
+			<li class=""><a href="/">Home</a></li>
+			<li><a href="/about/">About</a></li>
+			<li><a href="/contact/">Contact</a></li>
+			<li><a href="/service/">Services</a></li>
+			<li><a href="/register/">Register</a></li>
+			<li class="last"><a href="/login/">Login</a></li>
+		</ul>
+        {% endblock nav %}
+		<!--<ul>
+			<li class="first">
+				<span class="opener">Services<b></b></span>
+				<ul>
+					<li><a href="#">Lorem Ipsum</a></li>
+					<li><a href="#">Consequat Dolor</a></li>
+					<li><a href="#">Magna Feugiat</a></li>
+					<li>
+						<span>Sed Tempus<b></b></span>
+						<ul>
+							<li><a href="#">Lorem Ipsum</a></li>
+							<li><a href="#">Consequat Dolor</a></li>
+							<li><a href="#">Magna Feugiat</a></li>
+							<li><a href="#">Sed Tempus</a></li>
+							<li><a href="#">Etiam Nullam</a></li>
+							<li><a href="#">Amet Phasellus</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Etiam Nullam</a></li>
+					<li><a href="#">Amet Phasellus</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Products</a></li>
+			<li><a href="#">Clients</a></li>
+			<li>
+				<span class="opener">Support<b></b></span>
+				<ul>
+					<li><a href="#">Lorem Ipsum</a></li>
+					<li><a href="#">Consequat Dolor</a></li>
+					<li><a href="#">Magna Feugiat</a></li>
+					<li>
+						<span>Sed Tempus<b></b></span>
+						<ul>
+							<li><a href="#">Lorem Ipsum</a></li>
+							<li><a href="#">Consequat Dolor</a></li>
+							<li><a href="#">Magna Feugiat</a></li>
+							<li><a href="#">Sed Tempus</a></li>
+							<li><a href="#">Etiam Nullam</a></li>
+							<li><a href="#">Amet Phasellus</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Etiam Nullam</a></li>
+					<li><a href="#">Amet Phasellus</a></li>
+				</ul>
+			</li>
+			<li><a href="#">About</a></li>
+			<li class="last"><a href="#">Contact</a></li>
+		</ul>-->
+		<br class="clearfix" />
+	</div>
+	<!-- menu ends -->
+
+
+	<!-- slider starts -->
+    {% block slider %}
+	<div id="slider">
+		<div class="viewer">
+			<div class="reel">
+				<div class="slide">
+					<img src="{% static 'images/banner1.jfif' %}" height="250"  width="870"  alt="" />
+				</div>
+				<div class="slide">
+					<img src="{% static 'images/banner2.jpeg' %}" height="250"  width="870" alt="" />
+				</div>
+				<div class="slide">
+					<img src="{% static 'images/banner3.jpeg' %}" height="200"  width="870" alt="" />
+				</div>
+				<div class="slide">
+					<img src="{% static 'images/banner4.jfif' %}" height="250"  width="870" alt="" />
+				</div>
+				<div class="slide">
+					<img src="{% static 'images/banner5.jfif' %}" height="250"  width="870" alt="" />
+				</div>
+			</div>
+		</div>
+		<div class="indicator">
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+		</div>
+	</div>
+    {% endblock slider %}
+	<!-- slider ends -->
+
+	<!-- content starts -->
+	<div id="page">
+        {% block main %}
+        
+		<div id="content">
+            {% block content %}
+			<div class="box">
+				<h2>Welcome to Bid Me</h2>
+				<p style="text-align:justify;">
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia, neque? Rem voluptatibus repellat provident exercitationem possimus unde velit molestias magnam maiores magni commodi, minima porro beatae iure nisi delectus eum?
+				</p>
+			</div>
+            {% endblock content %}
+			<br class="clearfix" />
+		</div>
+
+		<div id="sidebar">
+            {% block sidebar %}
+			<div class="box">
+				<h3>Social Link</h3>
+				<ul class="list">
+					<li class="first"><a href="#">@Follow</a></li>
+					<li><a href="#">@Twitter</a></li>
+					<li><a href="#">@LinkedIn</a></li>
+					<li><a href="#">@gmail</a></li>
+				</ul>
+			</div>
+            {% endblock sidebar %}
+		</div>
+        
+        {% endblock main %}
+		<br class="clearfix" />
+	</div>
+    <!-- content ends -->
+	
+	<!-- bottom starts -->
+    {% block pagebottom %}
+	<div id="page-bottom">
+		<div id="page-bottom-content">
+			<h3>Our Serevices</h3>
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt corrupti minus, provident soluta molestiae adipisci sunt vero, temporibus esse, aut repudiandae nisi vel veritatis hic iure eligendi fugiat natus aperiam deserunt. Necessitatibus architecto placeat rerum reprehenderit excepturi, atque eligendi aliquid temporibus tenetur labore eum, impedit soluta, ratione dolorum tempora reiciendis.
+			</p>
+		</div>
+		<div id="page-bottom-sidebar">
+			<h3>Quick links</h3>
+			<ul class="list">
+				<li class="first"><a href="#">Portfolio</a></li>
+				<li><a href="#">Our Clients</a></li>
+				<li class="last"><a href="#">Our Products</a></li>
+			</ul>
+		</div>
+		<br class="clearfix" />
+	</div>
+    {% endblock pagebottom %}
+
+	<!-- bottom ends -->
+</div>
+<!-- wrapper ends -->
+
+<div id="footer">
+	&copy; Bid Me.All rights reserved 2023-2024. Design by <a href=""> Bid Me</a>
+</div>
+</body>
+</html>

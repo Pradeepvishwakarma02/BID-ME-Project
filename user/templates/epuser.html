@@ -1,0 +1,45 @@
+{% extends 'userhome.html' %}
+
+
+{% block main %}
+<h1>Edit Profile Here</h1>
+<br/>
+<font style="font-size:20px;" color="blue">{{output}}</font>
+<form method="post" action="/user/epuser/" >
+{% csrf_token %}
+
+<label>Name</label>    
+<input type="text" name="name" value="{{userDetails.name}}"/>
+<br/><br/>
+
+<label>Email</label>    
+<input type="text" name="email" value="{{userDetails.email}}" readonly/>
+<br/><br/>
+
+<label>Mobile</label>    
+<input type="text" name="mobile" value="{{userDetails.mobile}}" />
+<br/><br/>
+
+<label>Address</label>    
+<textarea name="address">{{userDetails.address}}</textarea>
+<br/><br/>
+
+<label>City</label>
+<select name="city">
+<option>{{userDetails.city}}</option>
+<option>Indore</option>
+<option>Bhopal</option>    
+<option>Ujjain</option>
+</select>
+<br/><br/>
+
+<label>Gender</label>    
+<input type="radio" name="gender" value="male" {{m}} /> Male
+<input type="radio" name="gender" value="female" {{f}} /> Female
+<br/><br/>
+
+<input type="submit" value="Edit Profile" />
+
+</form>
+
+{% endblock main %}

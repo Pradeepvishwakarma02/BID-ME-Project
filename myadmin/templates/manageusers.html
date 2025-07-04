@@ -1,0 +1,54 @@
+{% extends 'adminhome.html' %}
+
+{% block main %}
+
+<center>
+    <h1>View & Manage User Details Here!!!!</h1>
+    <br/>
+
+    <table cellspacing="10">
+        <tr>
+            <th>RegID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Gender</th>
+            <th>Info</th>
+            <th>status</th>
+            <th>Action</th>
+        </tr>
+        <tr><th colspan="10"><hr/></th></tr>
+        {% for row in userDetails %}
+        <tr>
+            <td>{{row.regid}}</td>
+            <td>{{row.name}}</td>
+            <td>{{row.email}}</td>
+            <td>{{row.mobile}}</td>
+            <td>{{row.address}}</td>
+            <td>{{row.city}}</td>
+            <td>{{row.gender}}</td>
+            <td>{{row.info}}</td>
+            <td>
+                {% if row.status %}
+                <font color="green">Active</font>
+                {% else %}
+                <font color="orange">InActive</font>
+                {% endif %}
+            </td>
+            <td>
+                {% if row.status %}
+                <a style="color:blue;text-decoration:none;" href="/myadmin/manageuserstatus/?s=inactive&regid={{row.regid}}">Change Status</a>
+                {% else %}
+                <a style="color:blue;text-decoration:none;" href="/myadmin/manageuserstatus/?s=active&regid={{row.regid}}">Change Status</a>
+                {% endif %}
+                <br/>
+                <a style="color:red;text-decoration:none;" href="/myadmin/manageuserstatus/?s=delete&regid={{row.regid}}">Delete</a>
+            </td>
+        </tr>
+        <tr><th colspan="10"><hr/></th></tr>
+        {% endfor %}
+    </table>
+</center>
+{% endblock main %}

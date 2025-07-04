@@ -1,0 +1,45 @@
+{% extends 'userhome.html' %}
+
+{% block main %}
+<h1>ADD PRODUCT HERE</h1>
+<br/>
+<font style="font-size:20px;" color="blue">{{output}}</font>
+<form method="post" action="/user/addproduct/" enctype="multipart/form-data" >
+{% csrf_token %}
+
+<label>Product</label>
+<br/>    
+<input type="text" name="pname" placeholder="Enter product name" />
+<br/><br/>
+
+<label>Sub Category</label>
+<br/>    
+<Select name="subcatname">
+<option>Select Sub Category</option> 
+{% for row in sclist %} 
+<option>{{row.subcatname}}
+</option>
+{% endfor %}  
+</select>
+<br/><br/>
+
+
+<label>Description</label>
+<br/>    
+<textarea type="description" name="pdescription" placeholder="Enter description" ></textarea>
+<br/><br/>
+
+<label>Base Price</label>
+<br/>    
+<input type="price" name="bprice" placeholder="Enter base price" />
+<br/><br/>
+
+<label>Product Icon</label>    
+<br/>
+<input type="file" name="picon" />
+<br/><br/>
+
+<input type="submit" value="Add product" />
+
+</form>
+{% endblock main %}
