@@ -1,7 +1,9 @@
 from django.http import HttpResponse 
 from django.shortcuts import render, redirect
 from . import models 
+from .models import Register  # your model
 import time
+import hashlib
 
 def sessioncheck_middleware(get_response):
     def middleware(request):
@@ -38,15 +40,16 @@ def register(request):
         city = request.POST.get("city")
         gender = request.POST.get("gender")
         info = time.asctime()
+        
+        hashed_pwd = hashlib.sha1(password.encode()).hexdigest().upper()
+        hashed_pwd = "*" + hashed_pwd
 
-        # Handling profile photo upload
-        profile_photo = request.FILES.get('profile_photo')
 
         # Insert data using model class
         p = models.Register(
-            name=name, email=email, password=password, mobile=mobile,
+            name=name, email=email, password=hashed_pwd, mobile=mobile,
             address=address, city=city, gender=gender, status=0, role="user",
-            info=info, profile_photo=profile_photo
+            info=info
         )
         p.save()
 
@@ -61,8 +64,17 @@ def login(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
 
+       
         # Match details in models to make login
-        user_details = models.Register.objects.filter(email=email, password=password, status=1)
+        #user_details = models.Register.objects.filter(email=email, password=password, status=1)
+        
+        # ✅ Hash the password to match stored value
+        hashed_pwd = hashlib.sha1(password.encode()).hexdigest().upper()
+        hashed_pwd = "*" + hashed_pwd  # Match MySQL's PASSWORD() style
+
+        # Match details in models to make login
+        user_details = models.Register.objects.filter(email=email, password=hashed_pwd, status=1)
+
 
         if len(user_details) > 0:
             # Store user details in session

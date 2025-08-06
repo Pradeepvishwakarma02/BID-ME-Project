@@ -11,4 +11,4 @@ class Register(models.Model):
     gender=models.CharField(max_length=10)
     status=models.IntegerField()
     role=models.CharField(max_length=10)
-    info=models.CharField(max_length=50)           
+    info=models.CharField(max_length=50)
