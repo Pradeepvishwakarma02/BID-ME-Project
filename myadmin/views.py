@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
+import hashlib
 
 from . import models
 from mydjapp import models as mydjapp_models
@@ -9,7 +10,7 @@ from mydjapp import models as mydjapp_models
 def sessioncheckmyadmin_middleware(get_response):
 	def middleware(request):
 		if request.path=='/myadmin/' or request.path=='/myadmin/manageusers/' or request.path=='/myadmin/manageuserstatus/' or request.path=="/myadmin/cpadmin/" or request.path=="/myadmin/epadmin/" or request.path=='/myadmin/addcategory/' or request.path=='/myadmin/addsubcategory/':
-			if request.session['sunm']==None or request.session['srole']!="admin":
+			if request.session.get('sunm')==None or request.session.get('srole')!="admin":
 				response = redirect('/login/')
 			else:
 				response = get_response(request)
@@ -22,11 +23,11 @@ def sessioncheckmyadmin_middleware(get_response):
 
 def adminhome(request):
     #print(request.session["sunm"])
-    return render(request,"adminhome.html",{"sunm":request.session["sunm"]})
+    return render(request,"adminhome.html",{"sunm":request.session.get("sunm", "")})
 
 def manageusers(request):
     userDetails=mydjapp_models.Register.objects.filter(role="user")
-    return render(request,"manageusers.html",{"userDetails":userDetails,"sunm":request.session["sunm"]})
+    return render(request,"manageusers.html",{"userDetails":userDetails,"sunm":request.session.get("sunm", "")})
 
 def manageuserstatus(request):
     s=request.GET.get("s")
@@ -43,37 +44,51 @@ def manageuserstatus(request):
 
 def cpadmin(request):
     if request.method=="GET":
-        return render(request,"cpadmin.html",{"output":"","sunm":request.session["sunm"]})
+        return render(request,"cpadmin.html",{"output":"","sunm":request.session.get("sunm", "")})
     else:
         opassword=request.POST.get("opassword")
         npassword=request.POST.get("npassword")
         cnpassword=request.POST.get("cnpassword")
-        sunm=request.session["sunm"]
+        sunm=request.session.get("sunm")
 
-        userDetails=mydjapp_models.Register.objects.filter(email=sunm,password=opassword)
+        if not sunm:
+            return redirect('/login/')
+
+        # Hash the old password to match stored value
+        hashed_opwd = hashlib.sha1(opassword.encode()).hexdigest().upper()
+        hashed_opwd = "*" + hashed_opwd
+
+        userDetails=mydjapp_models.Register.objects.filter(email=sunm,password=hashed_opwd)
         
         if len(userDetails)>0:
             if npassword==cnpassword:
-                mydjapp_models.Register.objects .filter(email=sunm).update(password=cnpassword)
-                return render(request,"cpadmin.html",{"output":"Password Changes Successfully","sunm":request.session["sunm"]})
+                # Hash the new password before storing
+                hashed_npwd = hashlib.sha1(cnpassword.encode()).hexdigest().upper()
+                hashed_npwd = "*" + hashed_npwd
+                mydjapp_models.Register.objects.filter(email=sunm).update(password=hashed_npwd)
+                return render(request,"cpadmin.html",{"output":"Password Changes Successfully","sunm":request.session.get("sunm", "")})
 
             else:
-                return render(request,"cpadmin.html",{"output":"New Password & Confirm New Password Mismatch....","sunm":request.session["sunm"]})
+                return render(request,"cpadmin.html",{"output":"New Password & Confirm New Password Mismatch....","sunm":request.session.get("sunm", "")})
         else:
-            return render(request,"cpadmin.html",{"output":"Invalid Username or Old Password.....","sunm":request.session["sunm"]})
+            return render(request,"cpadmin.html",{"output":"Invalid Username or Old Password.....","sunm":request.session.get("sunm", "")})
 
         #return render(request,"cpadmin.html",{"output":"ok","sunm":request.session["sunm"]})
         
 def epadmin(request):
-    sunm=request.session["sunm"]
+    sunm=request.session.get("sunm")
+    if not sunm:
+        return redirect('/login/')
     if request.method=="GET":
         userDetails=mydjapp_models.Register.objects.filter(email=sunm)
+        if len(userDetails)==0:
+            return redirect('/login/')
         m,f="",""
         if userDetails[0].gender=="male":
             m="checked"
         else:
             f="checked"
-        return render(request,"epadmin.html",{"userDetails":userDetails[0],"sunm":request.session["sunm"],"output":"","m":m,"f":f})
+        return render(request,"epadmin.html",{"userDetails":userDetails[0],"sunm":request.session.get("sunm", ""),"output":"","m":m,"f":f})
     else:
         name=request.POST.get("name")
         mobile=request.POST.get("mobile")
@@ -87,7 +102,7 @@ def epadmin(request):
 
 def addcategory(request):
     if request.method=="GET":
-        return render(request,"addcategory.html",{"sunm":request.session["sunm"],"output":""})
+        return render(request,"addcategory.html",{"sunm":request.session.get("sunm", ""),"output":""})
     else:
         catname=request.POST.get("catname")
         caticon=request.FILES["caticon"]
@@ -96,12 +111,12 @@ def addcategory(request):
         #print(filename+"-----"+catname)
         p=models.Category(catname=catname,caticonname=filename)
         p.save()
-        return render(request,"addcategory.html",{"sunm":request.session["sunm"],"output":"Category Added Successfully"})
+        return render(request,"addcategory.html",{"sunm":request.session.get("sunm", ""),"output":"Category Added Successfully"})
 
 def addsubcategory(request):
     clist=models.Category.objects.all()    
     if request.method=="GET":
-        return render(request,"addsubcategory.html",{"sunm":request.session["sunm"],"output":"","clist":clist})
+        return render(request,"addsubcategory.html",{"sunm":request.session.get("sunm", ""),"output":"","clist":clist})
     else:
         catname=request.POST.get("catname")
         subcatname=request.POST.get("subcatname")
@@ -110,4 +125,4 @@ def addsubcategory(request):
         filename = fs.save(caticon.name,caticon)
         p=models.SubCategory(catname=catname,subcatname=subcatname,subcaticonname=filename)
         p.save()
-        return render(request,"addsubcategory.html",{"sunm":request.session["sunm"],"output":"SubCategory Added Successfully","clist":clist})   
+        return render(request,"addsubcategory.html",{"sunm":request.session.get("sunm", ""),"output":"SubCategory Added Successfully","clist":clist})   

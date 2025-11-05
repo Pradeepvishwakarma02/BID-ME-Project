@@ -65,25 +65,30 @@ def login(request):
         password = request.POST.get("password")
 
        
-        # Match details in models to make login
-        #user_details = models.Register.objects.filter(email=email, password=password, status=1)
-        
-        # ✅ Hash the password to match stored value
+        # Hash the password to match stored value
         hashed_pwd = hashlib.sha1(password.encode()).hexdigest().upper()
-        hashed_pwd = "*" + hashed_pwd  # Match MySQL's PASSWORD() style
+        hashed_pwd = "*" + hashed_pwd  # emulate MySQL PASSWORD() style used on registration
 
-        # Match details in models to make login
-        user_details = models.Register.objects.filter(email=email, password=hashed_pwd, status=1)
+        # First, check if user exists with these credentials (regardless of status)
+        user_details = models.Register.objects.filter(email=email, password=hashed_pwd)
 
+        # Backward compatibility: if no match with hashed password, try legacy plaintext
+        if len(user_details) == 0:
+            user_details = models.Register.objects.filter(email=email, password=password)
+            if len(user_details) == 0:
+                return render(request, "login.html", {"output": "Invalid email or password"})
 
-        if len(user_details) > 0:
-            # Store user details in session
-            request.session["sunm"] = user_details[0].email
-            request.session["srole"] = user_details[0].role
+        user = user_details[0]
 
-            if user_details[0].role == "admin":
-                return redirect("/myadmin/")
-            else:
-                return redirect("/user/")
+        # If account is not approved yet, show a clear message
+        if user.status != 1 and user.role != "admin":
+            return render(request, "login.html", {"output": "Your account is pending admin approval."})
+
+        # Store user details in session
+        request.session["sunm"] = user.email
+        request.session["srole"] = user.role
+
+        if user.role == "admin":
+            return redirect("/myadmin/")
         else:
-            return render(request, "login.html", {"output": "Invalid"})
+            return redirect("/user/")
